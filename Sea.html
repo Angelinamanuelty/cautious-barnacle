@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter for Amberry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sea-blue: #0077be;
+            --deep-ocean: #005f8d;
+            --soft-teal: #e0f7fa;
+            --pure-white: #ffffff;
+        }
+
+        body {
+            background-color: var(--soft-teal);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            perspective: 1200px;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        /* --- TITLE STYLES --- */
+        .page-title {
+            position: absolute;
+            top: 8vh;
+            color: var(--deep-ocean);
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            z-index: 20;
+            animation: title-float 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes title-float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* --- BERRY PARTICLE STYLES --- */
+        #particle-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            bottom: -60px;
+            opacity: 0;
+            font-size: 24px;
+            animation: float-up var(--duration) linear infinite;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg) translateX(var(--drift)); opacity: 0; }
+        }
+
+        /* --- ENVELOPE STYLES (SEA THEME) --- */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px; 
+            height: 200px;
+            background-color: var(--sea-blue);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid var(--deep-ocean);
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 5;
+        }
+
+        .envelope-front {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid var(--sea-blue);
+            border-right: 150px solid var(--sea-blue);
+            border-bottom: 110px solid var(--deep-ocean);
+            z-index: 4;
+            filter: brightness(1.1);
+        }
+
+        /* --- LETTER CONTENT --- */
+        .letter-paper {
+            position: absolute;
+            top: 5px; left: 10px;
+            width: 280px;
+            height: 180px;
+            background: var(--pure-white);
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.7s ease, height 0.7s ease;
+            z-index: 2;
+            font-family: 'Cedarville Cursive', cursive;
+            color: var(--deep-ocean);
+            font-size: 11px;
+            line-height: 1.4;
+            white-space: pre-line;
+            overflow-y: auto;
+        }
+
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+        
+        .envelope-wrapper.open .letter-paper {
+            transform: translateY(-180px);
+            height: 450px;
+            z-index: 10;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Pearl Seal */
+        .seal {
+            position: absolute;
+            top: 85px; left: 50%; transform: translateX(-50%);
+            width: 42px; height: 42px;
+            background-color: var(--soft-teal);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--sea-blue); font-size: 22px;
+            z-index: 6; transition: opacity 0.3s;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        .envelope-wrapper.open .seal { opacity: 0; }
+
+        .signature-block {
+            text-align: right;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-title">Tap to Open</div>
+
+    <div id="particle-container"></div>
+
+    <div class="envelope-wrapper" id="seaMail" onclick="toggleLetter()">
+        <div class="flap"></div>
+        <div class="seal">🐚</div>
+        <div class="envelope-front"></div>
+        
+        <div class="letter-paper">
+Dear Amberry,
+My Strawberry, Blueberry, of all berries 
+
+This school has reached the end and we'll go on separate ways...I'm glad that I became to your berry friend, your were the first friend that I meet on ict class then we were both scared cause of the late timing at class, and it gradually led us to being good friends and I got to know you better, your a person that is neutral and has self-full demeanor and I loved that about you, the laughter we shared and the friendship that grew upon us was blissful along with Yoichie, Luke and Aldwayne, this token letter is from my deepest heart...
+
+this is not a good bye but just a see you around, I hope you will flourish and grow with the fullest.. Catch you later! Amberut, Lailai, Amberry, Berry.
+
+            <div class="signature-block">
+                Yours Truly,
+                ANGELLY
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleLetter() {
+            document.getElementById('seaMail').classList.toggle('open');
+        }
+
+        function createBerries() {
+            const container = document.getElementById('particle-container');
+            const particleCount = 25;
+            const berries = ['🪩', '❄️'];
+
+            for (let i = 0; i < particleCount; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                
+                // Randomly pick Strawberry or Blueberry
+                p.innerHTML = berries[Math.floor(Math.random() * berries.length)];
+
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.setProperty('--duration', Math.random() * 6 + 4 + 's');
+                p.style.setProperty('--drift', (Math.random() * 200 - 100) + 'px');
+                p.style.animationDelay = Math.random() * 5 + 's';
+                
+                container.appendChild(p);
+            }
+        }
+
+        createBerries();
+    </script>
+</body>
+</html>
